@@ -1,28 +1,41 @@
 package com.devsuperior.dscommerce.entities;
 
 import jakarta.persistence.*;
-import java.util.Objects;
+
+import java.util.*;
 
 @Entity
-@Table (name = "tb_product")
+@Table(name = "tb_product")
 public class Product {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+
     private Double price;
+
     private String imgUrl;
+
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(Long id, String name, String description, Double price, String imgUrl) {
+    public Product(Long id, String name, String description, Double price, String imgUrl, Set<Category> categories) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+        this.categories = categories;
     }
 
     public Long getId() {
@@ -63,6 +76,10 @@ public class Product {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
     }
 
     @Override
