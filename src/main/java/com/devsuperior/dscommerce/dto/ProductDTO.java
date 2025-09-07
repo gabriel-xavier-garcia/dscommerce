@@ -1,10 +1,6 @@
 package com.devsuperior.dscommerce.dto;
 
 import com.devsuperior.dscommerce.entities.Product;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 public class ProductDTO {
     private Long id;
@@ -25,12 +21,13 @@ public class ProductDTO {
 
     }
 
+
     public ProductDTO(Product entity) {
         id = entity.getId();
         name = entity.getName();
-        description = entity.getDescription();
-        price = entity.getPrice();
-        imgUrl = entity.getImgUrl();
+        description = getDescription();
+        price = getPrice();
+        imgUrl = getImgUrl();
     }
 
 
